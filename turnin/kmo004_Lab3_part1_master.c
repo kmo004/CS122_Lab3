@@ -141,17 +141,11 @@ void Tick(){
 	}
 }
 
-unsigned char x = 0x00;
-unsigned char data = 0x00;
-unsigned char speed = 0x00;
-unsigned char pattern = 0x00;
 
 int main(void) {
     /* Insert DDR and PORT initializations */
     DDRB = 0x00; PORTB = 0xFF;
     DDRC = 0xFF; PORTC = 0x00;
-	DDRA = 0xF0; PORTA = 0x0F;
-	DDRD = 0xFF; PORTD = 0x00;
     
     SPI_MasterInit();
     
@@ -159,41 +153,12 @@ int main(void) {
     TimerSet(500);
 	TimerOn();
 
-	
-	
-
     /* Insert your solution below */
     while (1) {
 		
-
-		//Tick();
-		
-		x = GetKeypadKey();
-		
-		switch(x) {
-			case '\0': data = data;break;
-			case '1': speed = 0x01;break;
-			case '2': speed = 0x02;break;
-			case '3': speed = 0x03;break;
-			case '4': speed = 0x04;break;
-			case '5': speed = 0x05;break;
-			case '6': speed = 0x06;break;
-			case '7': data = data;break;
-			case '8': data = data;break;
-			case '9': data = data;break;
-			case 'A': pattern = 0x10;break;
-			case 'B': pattern = 0x20;break;
-			case 'C': pattern = 0x30;break;
-			case 'D': pattern = 0x40;break;
-			case '*': data = data;break;
-			case '0': data = data;break;
-			case '#': data = data;break;
-			default: data = data;break;
-			
-			continue;
-		}
-		data = pattern | speed;
-		SPI_MasterTransmit(data);
+		Tick();
+		//light = 0xFF;
+		SPI_MasterTransmit(light);
 		
 		while (!TimerFlag){}
 		TimerFlag = 0;
